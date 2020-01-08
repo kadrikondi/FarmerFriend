@@ -9,9 +9,18 @@ const routes = require('./routes/routes')
 const path = require('path')
 //const pid = process.pid
 //app.use(morgan('dev')) // install morgan
+
+const graphHTTP = require('express-graphql')
+
+const schema = require('./schema/schema')
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
     extended: true
+}))
+app.use('/graphql', graphHTTP({
+    schema,
+    graphiql: true
 }))
 app.use('/', routes)
 
@@ -44,14 +53,15 @@ app.listen(port, () => {
             })
             .then(() => {
 
-                console.log(`Yakub e-banking server is using running on ${port}`)
+                console.log(`Unify-Banking server is using running on ${port}`)
             })
             .catch((err) => {
                 console.log(err)
             })
     } else {
-        mongoose.connect('mongodb://localhost:27017/EBanking', {
-                useNewUrlParser: true
+        mongoose.connect('mongodb://localhost:27017/Unifybanking', {
+                useNewUrlParser: true,
+                useUnifiedTopology: true
             })
             .then(() => {
 

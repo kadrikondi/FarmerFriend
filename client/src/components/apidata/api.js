@@ -82,3 +82,15 @@ export async function getAllComplains(){
         
     }
 }
+
+export async function getAllBank() {
+    try {
+        const info = await axios.get('/allbank')
+        return info.data
+    } catch (error) {
+
+    }
+}
+ 
+    
+    

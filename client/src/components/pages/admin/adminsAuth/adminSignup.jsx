@@ -44,7 +44,7 @@ class AdminSignup extends Component {
         // }
         this.setState({isLoading:true})
 
-        fetch("/register", {
+        fetch("/aregister", {
             method: "POST",
             headers: {
                 "Accept": "application/json",

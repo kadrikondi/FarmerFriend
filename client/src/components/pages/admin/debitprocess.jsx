@@ -32,7 +32,7 @@ export class debitprocess extends Component {
     })
     .then( res => res.json())
     .then(res => {
-      //console.log(res)
+      console.log(res)
       this.setState({isLoading:false})
       if(res.message === 'account updated'){
         alert(res.message)
@@ -41,6 +41,8 @@ export class debitprocess extends Component {
         window.localStorage.removeItem('acctno')
         window.localStorage.removeItem('amount')
         window.localStorage.removeItem('sender')
+      }else{
+        alert(res.message)
       }
     })
     .catch(err => {

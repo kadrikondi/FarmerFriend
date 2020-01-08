@@ -92,7 +92,7 @@ exports.transferFund = async (req, res, next) => {
             transport.sendMail(mailOptions, (err) => {
                 if (err) {
                     res.status(403).json({
-                        message:'Request failed, please check your acct balance'
+                        message:'success but mail fail to sent'
                     })
                 }
                 // else{

@@ -8,43 +8,43 @@ class Signin extends Component {
   constructor() {
     super();
     this.state = {
-      acct_no: "",
+      email: "",
       password: "",
       isLoading: false,
       info: ""
     };
 
-    this.handleAccouNo = this.handleAccountNo.bind(this);
+    this.handleEmail = this.handleEmail.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    var acct = document.getElementById('acct').value
+
     this.setState({ isLoading: true });
-    fetch("/login", {
+    fetch("/loginn", {
       method: "POST",
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        acct_no: acct,
+        email: this.state.email,
         password: this.state.password
       })
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res.message + `token ${res.token}`);
+        console.log(res.message + `  token ${res.token}`);
 
         this.setState({ isLoading: false });
         this.setState({ info: res.message });
-        console.log(this.state.info);
-        if (res.message === 'Login successful') {
-          //window.localStorage.setItem("userId", res.id);
+      
+        if (res.message === "Login successful") {
+          window.localStorage.setItem("userId", res.id);
           window.localStorage.setItem("token", JSON.stringify(res.token));
 
-          this.props.history.push("/cdash");
+          this.props.history.push("/userconfirm");
         }
       })
       .catch(err => {
@@ -55,8 +55,8 @@ class Signin extends Component {
     //console.log(this.state)
   };
 
-  handleAccountNo(e) {
-    this.setState({ acct_no: e.target.value });
+  handleEmail(e) {
+    this.setState({ email: e.target.value });
   }
   handlePassword(e) {
     this.setState({ password: e.target.value });
@@ -90,14 +90,14 @@ class Signin extends Component {
             <div className="text-center" style={{ color: "#757575" }}>
               {/* <!-- Email --> */}
               <div className="input-group mt-5">
-                <label htmlFor="">Accout No:</label>
+                <label htmlFor="">Email:</label>
                 <input
                   type="text"
                   id="acct"
                   className="form-control"
                   //value={this.state.acct_no}
-                  placeholder="Enter Your Account Number"
-                  onChange={this.handleAccoutNo}
+                  placeholder="Enter Your Email"
+                  onChange={this.handleEmail}
                 />
               </div>
 
@@ -123,15 +123,15 @@ class Signin extends Component {
 
               {/* <!-- Sign in button --> */}
               {/* <Link to="cdash"> */}
-                <button
-                  id="loginbtn"
-                  className="site-btn sb-gradients btn-block waves-effect z-depth-0 mt-5 "
-                  type="submit"
-                  onClick={this.handleSubmit}
-                >
-                  {" "}
-                  Sign in
-                </button>
+              <button
+                id="loginbtn"
+                className="site-btn sb-gradients btn-block waves-effect z-depth-0 mt-5 "
+                type="submit"
+                onClick={this.handleSubmit}
+              >
+                {" "}
+                Sign in
+              </button>
               {/* </Link> */}
               {/* <!-- Register --> */}
 

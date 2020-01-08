@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Route,Switch} from 'react-router-dom'
 import LandingPage from './components/pages/landingpage';
-import Signup from './components/pages/Signup/Signup';
+import Signup from './components/pages/Signup/Register';
 import Dashboard from './components/pages/dashboard/dashboard'
 import Signin from './components/pages/Signin/Signin';
 import Transfer from './components/pages/dashboard/transaction/transfer';
@@ -30,12 +30,42 @@ import CompleteReg from './components/pages/Signup/completeReg'
 import UpdateProfile from './components/pages/dashboard/updateProfile'
 import withdrawalTransaction from './components/pages/admin/withdrawalTransaction'
 import Firstpage from './components/pages/Firstpage'
+import Register from './components/pages/Signup/Register' 
+import GenerateOtp from './components/pages/Otp/GenerateOtp'
+import ConfirmOtp from './components/pages/Otp/confirmOtp'
+import Addbank from './components/pages/Addbank'
 
 export class routes extends Component {
   render() {
     return (
       <div>
         <Switch>
+           < Route path = "/addbank"
+           strict exact = {
+             true
+           }
+           component = {
+             Addbank
+           }
+           />
+           <Route path="/register"  strict exact={true} component={Register}/>
+           < Route path = "/userconfirm"
+           strict exact = {
+             true
+           }
+           component = {
+             GenerateOtp
+           }
+           />
+            < Route path = "/confirmotp"
+            strict exact = {
+              true
+            }
+            component = {
+              ConfirmOtp
+            }
+            />
+
           <Route path="/"  strict exact={true} component={LandingPage}/>
           <Route path="/withdrawal/transaction/:id"  strict exact={true} component={withdrawalTransaction}/>
           <Route path="/change/profile/:id"  strict exact={true} component={UpdateProfile}/>

@@ -92,7 +92,7 @@ exports.updateAccountAmount = async (req, res) => {
         transport.sendMail(mailOptions, (err) => {
             if (err) {
                 res.status(403).json({
-                    message:'Request failed, please check your acct balance'
+                    message:'success but alert fail to sent to your mail check intenet'
                 })
             }
             else{

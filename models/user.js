@@ -2,6 +2,22 @@ const mongoose = require('mongoose')
 const mongoDbErrorHandler = require('mongoose-mongodb-errors');
 
 const userSchema = new mongoose.Schema({
+     sname: String,
+         username: String,
+         password: String,
+         bvn: String,
+         phone: Number,
+         email: String,
+         otp: {
+             type: String
+         },
+         banks: String,
+         start: {
+             type: Date
+         },
+         end: {
+             type: Date
+         },
     acct_name:String,
     id_card:String,
     fname:{type: String},

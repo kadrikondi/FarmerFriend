@@ -97,6 +97,11 @@ export class sidebar extends Component {
               </Link>
             </li>
             <li className="list-group-item ">
+              <Link to={`/addbank`} style={liStyle}>
+               Add Banks
+              </Link>
+            </li>
+            <li className="list-group-item ">
               <Link to="/conplain" style={liStyle}>
                 Make enquery / complain
               </Link>
