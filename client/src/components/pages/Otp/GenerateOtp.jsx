@@ -55,6 +55,8 @@ export class GenerateOtp extends Component {
             .then(res => {
                 console.log(res)
                 alert(res.message)
+                this.props.history.push("/confirmotp");
+
             })
             .catch(err => console.log(err))
     }

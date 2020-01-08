@@ -1,1 +1,2 @@
-weldone
+hi john in  all the server has been added to the ebanking previous project .
+the user register is save as userr in the user controller and the opt generation too and banks all in controller. i dont know what to use schema for and the genrate token complain on client not define . solve that and get the code runing.
