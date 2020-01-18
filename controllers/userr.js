@@ -12,8 +12,6 @@ const {
 
 exports.generateOTP = async (req, res) => {
   try {
-    console.log('hit')
-    
     let number = req.body.number
     if (!number) {
       res.json({
@@ -23,9 +21,9 @@ exports.generateOTP = async (req, res) => {
     const info = await User.findOne({
       fname: req.body.fname
     })
-    console.log(info)
     //let number = info.phone
     let OTP = generateOTP(number)
+    console.log(OTP)
     let start_time = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
     let next_time = moment().add(10, 'm').format('YYYY-MM-DD HH:mm:ss');
     let diff_milliseconds = Date.parse(next_time) - Date.parse(start_time);
