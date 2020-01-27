@@ -1,5 +1,5 @@
-const accountSid = 'AC80b96e102503685aea63091e5a1fcd6d';
-const authToken = '81b8b105a865225d5bfb11950b4036f8';
+const accountSid = 'AC125e4e6e6df47686794bf643c148ad90';
+const authToken = '2923597349e51ae470e952507378dc6a';
 const client = require('twilio')(accountSid, authToken);
 const moment = require('moment')
 const User = require('../models/user')
