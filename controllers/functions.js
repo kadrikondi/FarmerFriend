@@ -1,4 +1,8 @@
-  // Function to generate OTP 
+const accountSid = 'AC80b96e102503685aea63091e5a1fcd6d';
+const authToken = '81b8b105a865225d5bfb11950b4036f8';
+const client = require('twilio')(accountSid, authToken);
+ // Function to generate OTP 
+ 
   exports.generateOTP = (number) => {
     var digits = '0123456789'; 
     let OTP = ''; 

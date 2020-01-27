@@ -70,17 +70,18 @@
 //     console.log(response);
 //   });
   
-// const accountSid = 'AC80b96e102503685aea63091e5a1fcd6d';
-// const authToken = '81b8b105a865225d5bfb11950b4036f8';
-// const client = require('twilio')(accountSid, authToken);
+const accountSid = 'AC80b96e102503685aea63091e5a1fcd6d';
+const authToken = '81b8b105a865225d5bfb11950b4036f8';
+const client = require('twilio')(accountSid, authToken);
 
-// client.messages
-//   .create({
-//      body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
-//      from: '+14694143769',
-//      to: '+2349055932268'
-//    })
-//   .then(message => console.log(message.sid));
+client.messages
+  .create({
+     body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+     from: '+14694143769',
+     to: '+2349055932268'
+   })
+  .then(message => console.log(message.sid));
+  
 const { generateBvn } = require('./functions')
 
 const info = generateBvn()
