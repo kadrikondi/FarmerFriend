@@ -11,6 +11,7 @@ export class GenerateOtp extends Component {
             number:'',
             fname:''
             
+            
         }
     }
     async componentDidMount() {
@@ -54,8 +55,12 @@ export class GenerateOtp extends Component {
             .then(res => res.json())
             .then(res => {
                 console.log(res)
-                alert(res.message)
+                if (res.message === 'A message has been sent to your phone number'){
+                alert(res.mes)
                 this.props.history.push("/confirmotp");
+                }else{
+                    alert(res.message)
+                }
 
             })
             .catch(err => console.log(err))

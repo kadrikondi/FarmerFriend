@@ -9,6 +9,7 @@ export class ConfirmOtp extends Component {
         this.state = {
 
             phone: '',
+            fname:''
             
 
         }
@@ -31,6 +32,7 @@ export class ConfirmOtp extends Component {
                 var name = fname + ' ' + lname
                 this.setState({
                     from: name,
+                    fname:fname,
                     phone: result.phone,
                     acct: result.acct,
                     photo: result.photo
@@ -49,15 +51,20 @@ export class ConfirmOtp extends Component {
             body: JSON.stringify({
 
                 phone: this.state.phone,
-
+                fname: this.state.fname
 
             })
 
         })
             .then(res => res.json())
             .then(res => {
-                alert(res.message)
+              
+                if (res.message === 'OTP is still valid'){
+                    alert("Account confirmed")
                 this.props.history.push("/cdash");
+                }else{
+                alert(res.message)
+                }
             })
             .catch(err => console.log(err))
     }
@@ -105,6 +112,7 @@ export class ConfirmOtp extends Component {
                                             Confirm{" "}
                                         </button>
                                     </div>
+                                    <p>if you dont see Pin after 5mins<Link to="/userconfirm" className="btn  btn-sm btn-primary">Resend Pin</Link></p>
                                 </div>
                             </div>
                         </div>

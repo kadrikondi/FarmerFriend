@@ -13,6 +13,7 @@ const {
 exports.generateOTP = async (req, res) => {
   try {
     let number = req.body.number
+    console.log(number)
     if (!number) {
       res.json({
         message: 'enter number'
@@ -45,10 +46,14 @@ exports.generateOTP = async (req, res) => {
 
 //check validity of OTP
 exports.checkOTP = async (req, res) => {
+    console.log("date  "+new Date())
   const info = await User.findOne({
     fname: req.body.fname
   })
-  var checkDate = new Date()
+  // console.log(info)
+
+  var checkDate = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+  console.log(checkDate)
   if (checkDate > info.end) {
     info.otp = ""
     res.json({
