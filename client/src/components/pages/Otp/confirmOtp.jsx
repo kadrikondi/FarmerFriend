@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Customerheader from "../dashboard/customerheader";
-
+import {Link} from "react-router-dom"
 import '../admin/adminsAuth/Signin.css'
 
 export class ConfirmOtp extends Component {
@@ -9,40 +9,20 @@ export class ConfirmOtp extends Component {
         this.state = {
 
             phone: '',
-            fname:''
+            email:'',
+            otp: ''
             
 
         }
     }
     async componentDidMount() {
-        const token = await JSON.parse(localStorage.getItem('token'));
-        fetch('/userdetails', {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-
-        })
-            .then(res => res.json())
-            .then(result => {
-                //console.log(result)
-                var fname = result.fname
-                var lname = result.lname
-                var name = fname + ' ' + lname
-                this.setState({
-                    from: name,
-                    fname:fname,
-                    phone: result.phone,
-                    acct: result.acct,
-                    photo: result.photo
-                })
-            })
-            .catch(err => console.log(err))
+        const email = localStorage.getItem('email')
+        console.log(email)
+        this.setState({email: email})
     }
     handleSubmit(e) {
         e.preventDefault()
-        fetch('/check', {
+        fetch('/confirmotp', {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -50,18 +30,17 @@ export class ConfirmOtp extends Component {
             },
             body: JSON.stringify({
 
-                phone: this.state.phone,
-                fname: this.state.fname
+                otp: this.state.otp,
+                email: this.state.email
 
             })
 
         })
             .then(res => res.json())
             .then(res => {
-              
-                if (res.message === 'OTP is still valid'){
+                if (res.message === 'success'){
                     alert("Account confirmed")
-                this.props.history.push("/cdash");
+                    this.props.history.push("/cdash");
                 }else{
                 alert(res.message)
                 }
@@ -70,7 +49,10 @@ export class ConfirmOtp extends Component {
     }
 
     handlePhone(e) {
-        this.setState({ phone: e.target.value })
+        this.setState({ otp: e.target.value })
+    }
+    handleEmail(e) {
+        this.setState({ email: e.target.value })
     }
 
 
@@ -87,7 +69,7 @@ export class ConfirmOtp extends Component {
                         <div className="col-lg-8 col-md-8 col-md-8 col-sm-8">
                             <div className="card mt-5" id="signin" style={{ margin: "0 auto" }}>
                                 <div className="card-header dark-text text-center py-4">
-                                    <h4>User Confirmation</h4>
+                                    <h4>User Confirm OTP</h4>
                                     <div className="card-body text-center">
 
 
@@ -97,13 +79,12 @@ export class ConfirmOtp extends Component {
                                                 className="form-control"
                                                 type="text"
                                                 name=""
-                                                value={this.state.phone}
+                                                value={this.state.otp}
                                                 id="acct"
                                                 onChange={this.handlePhone.bind(this)}
-                                                placeholder="confirm code"
+                                                placeholder="confirm OTP"
                                             />
                                         </div>
-
 
                                         <button
                                             className="site-btn sb-gradients"
@@ -112,7 +93,7 @@ export class ConfirmOtp extends Component {
                                             Confirm{" "}
                                         </button>
                                     </div>
-                                    <p>if you dont see Pin after 5mins<Link to="/userconfirm" className="btn  btn-sm btn-primary">Resend Pin</Link></p>
+                                    <p>if you dont see Pin after 5mins  <Link to="/userconfirm" className="btn  btn-sm btn-primary">Resend Pin</Link></p>
                                 </div>
                             </div>
                         </div>

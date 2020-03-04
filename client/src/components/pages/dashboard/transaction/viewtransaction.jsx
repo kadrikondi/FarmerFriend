@@ -36,6 +36,7 @@ export class viewtransaction extends Component {
                 
                   <th>To Recipient Account No</th>
                   <th>Date of transaction</th>
+                  <th>phone</th>
                 </tr>
 
                 {this.state.transaction.map((transaction, index) =>{
@@ -43,8 +44,9 @@ export class viewtransaction extends Component {
                   <td>{index+1}</td>
                   <td> {transaction.sender}</td>
                   <td>{transaction.amount}</td>
-                  <td>{transaction.recipient_acct}</td>
+                  <td>{transaction.acct_no}</td>
                   <td>{moment(transaction.date).format('DD/MM/YYYY')}</td>
+                <td>{transaction.phone}</td>
                    
                 </tr>
                 })}

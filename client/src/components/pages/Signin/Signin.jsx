@@ -42,6 +42,8 @@ class Signin extends Component {
       
         if (res.message === "Login successful") {
           window.localStorage.setItem("userId", res.id);
+          window.localStorage.setItem('phone', res.phone)
+          window.localStorage.setItem('email', res.email)
           window.localStorage.setItem("token", JSON.stringify(res.token));
 
           this.props.history.push("/userconfirm");

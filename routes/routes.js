@@ -49,6 +49,7 @@ router.put('/generate', usercontroller.generateOTP)
 router.post('/check', usercontroller.checkOTP)
 router.post('/register', usercontroller.registerUser)
 router.post('/loginn', usercontroller.loginUser)
+router.post('/confirmotp', usercontroller.confirmOTP)
 
 //banks
 router.post('/createbank', bankcontroller.createBank)

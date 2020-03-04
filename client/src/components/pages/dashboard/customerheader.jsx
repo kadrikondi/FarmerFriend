@@ -15,7 +15,7 @@ export class customerheader extends Component {
                 <div className="container-fluid">
                     <a href="/" className="site-logo navbar-brand white" style={{ color: "white", fontFamily: "cursive" }}>
                         {/* <img src={logo} alt="ok" /> */}
-                        Ebanking system
+                        Unnify banking system
              
                     </a>
                     {/* <div className="responsive-bar">

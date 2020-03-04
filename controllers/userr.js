@@ -12,32 +12,37 @@ const {
 
 exports.generateOTP = async (req, res) => {
   try {
-    let number = req.body.number
+    const info = await User.findOne({
+      email: req.body.email
+    })
+    console.log(info)
+    let number = "0" + info.phone
     console.log(number)
     if (!number) {
       res.json({
-        message: 'enter number'
+        message: 'Phone number not valid'
       })
     }
-    const info = await User.findOne({
-      fname: req.body.fname
-    })
+    else {
+      let OTP = generateOTP(number)
+      console.log(OTP)
+      let start_time = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+      let next_time = moment().add(10, 'm').format('YYYY-MM-DD HH:mm:ss');
+      let diff_milliseconds = Date.parse(next_time) - Date.parse(start_time);
+      let diff_seconds = diff_milliseconds / 1000;
+      info.start = start_time
+      info.end = next_time
+      info.otp = OTP
+      await info.save()
+      console.log(info)
+      return res.json({
+        message: 'A message has been sent to your phone number',
+        info: info
+      })
+    }
     //let number = info.phone
-    let OTP = generateOTP(number)
-    console.log(OTP)
-    let start_time = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-    let next_time = moment().add(10, 'm').format('YYYY-MM-DD HH:mm:ss');
-    let diff_milliseconds = Date.parse(next_time) - Date.parse(start_time);
-    let diff_seconds = diff_milliseconds / 1000;
-    info.start = start_time
-    info.end = next_time
-    info.otp = OTP
-    await info.save()
-    return res.json({
-      message: 'A message has been sent to your phone number',
-      info: info
-    })
   } catch (error) {
+    console.log(error.message)
     return res.status(500).json({
       message: error.message
     })
@@ -48,11 +53,11 @@ exports.generateOTP = async (req, res) => {
 exports.checkOTP = async (req, res) => {
     console.log("date  "+new Date())
   const info = await User.findOne({
-    fname: req.body.fname
+    email: req.body.email
   })
   // console.log(info)
 
-  var checkDate = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+  var checkDate =  moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
   console.log(checkDate)
   if (checkDate > info.end) {
     info.otp = ""
@@ -126,7 +131,7 @@ exports.loginUser = async (req, res) => {
         console.log(`${passwordIsValid}  ${password}`)
         if (!passwordIsValid) {
           return res.status(404).json({
-            message: 'Wrong email/passworddd'
+            message: 'Wrong email/password'
           })
         } else {
           const token = await jwt.sign({
@@ -137,14 +142,19 @@ exports.loginUser = async (req, res) => {
             lname: user.lname,
             username:user.username
           }, config.Usercode)
+          let phone = user.phone
+          let email = user.email
           return res.status(200).json({
             token: token,
-            message: 'Login successful'
+            message: 'Login successful',
+            phone: phone,
+            email: email
           })
         }
       }
     }
   } catch (error) {
+    console.log(error.message)
     return res.status(500).json({
       message: error.message
     })
@@ -170,5 +180,33 @@ exports.deleteUserWithBanks = async (req, res) => {
     return res.status(500).json({
       message: error.message
     })
+  }
+}
+
+exports.confirmOTP = async (req, res) => {
+  try {
+    const info = await User.findOne({otp: req.body.otp})
+    if(!info) {
+      return res.status(404).json({
+        message: 'Invalid otp'
+      })
+    }
+    else {
+      var checkDate = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+      console.log(checkDate)
+      if (checkDate > info.end) {
+        info.otp = ""
+        res.json({
+          message: 'Invalid OTP/OTP has expired'
+        })
+      } else {
+         return res.status(200).json({
+           message: 'success'
+         })
+      }
+     
+    }
+  } catch (error) {
+    console.log(error.message)
   }
 }

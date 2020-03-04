@@ -8,36 +8,25 @@ export class GenerateOtp extends Component {
         super()
         this.state = {
            
-            number:'',
-            fname:''
+            phone:'',
+            fname:'',
+            email: '',
+            id: ''
             
             
         }
     }
     async componentDidMount() {
-        const token = await JSON.parse(localStorage.getItem('token'));
-        fetch('/userdetails', {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-
-        })
-            .then(res => res.json())
-            .then(result => {
-                // console.log(result)
-                var fname = result.fname
-                var lname = result.lname
-                var name = fname + ' ' + lname
-                this.setState({
-                   fname:fname
-                })
-            })
-            .catch(err => console.log(err))
+        const phone = await JSON.parse(localStorage.getItem('phone'))
+        const email = localStorage.getItem('email')
+        console.log(email)
+        this.setState({email: email, phone: phone})
     }
+    
     handleSubmit(e) {
         e.preventDefault()
+        console.log(this.state.email)
+        console.log(this.state.phone)
         fetch('/generate', {
             method: "PUT",
             headers: {
@@ -45,10 +34,7 @@ export class GenerateOtp extends Component {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-               
-                number: this.state.number,
-                fname:this.state.fname
-                
+                email: this.state.email
             })
 
         })
@@ -56,7 +42,7 @@ export class GenerateOtp extends Component {
             .then(res => {
                 console.log(res)
                 if (res.message === 'A message has been sent to your phone number'){
-                alert(res.mes)
+                alert(res.message)
                 this.props.history.push("/confirmotp");
                 }else{
                     alert(res.message)
@@ -67,9 +53,11 @@ export class GenerateOtp extends Component {
     }
    
     handlePhone(e) {
-        this.setState({ number: e.target.value })
+        this.setState({ phone: e.target.value })
     }
-  
+    handleEmail(e) {
+        this.setState({ email: e.target.value })
+    }
 
     render() {
         return (
@@ -94,12 +82,29 @@ export class GenerateOtp extends Component {
                                             <input
                                                 className="form-control"
                                                 type="text"
+                                                disabled
+                                                hidden
                                                 name=""
                                                 value=
-                                                {this.state.number}
+                                                {this.state.phone}
                                                 id="acct"
                                                 onChange={this.handlePhone.bind(this)}
                                                 placeholder="phone number"
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                        
+                                            <input
+                                                className="form-control"
+                                                type="email"
+                                                disabled
+                                                hidden
+                                                name=""
+                                                value=
+                                                {this.state.email}
+                                            
+                                                onChange={this.handleEmail.bind(this)}
+                                                placeholder="email"
                                             />
                                         </div>
 
@@ -108,7 +113,7 @@ export class GenerateOtp extends Component {
                                             className="site-btn sb-gradients"
                                             onClick={this.handleSubmit.bind(this)}
                                         >
-                                            Send{" "}
+                                            Send me otp{" "}
                                         </button>
                                     </div>
                                 </div>
